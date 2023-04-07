@@ -1,12 +1,6 @@
 cd /Users/chris/Music/samples
 vid=$1
 
-# check if a video url was passed as an argument and exit if it wasn't
-if [ -z "$vid" ]; then
-    echo "Error: No video url passed as an argument"
-    exit 1
-fi
-
 # respond to the -h or --help flags
 if [ "$vid" = "-h" ] || [ "$vid" = "--help" ]; then
 
@@ -16,6 +10,12 @@ if [ "$vid" = "-h" ] || [ "$vid" = "--help" ]; then
     "The stems are written to a subdirectory called splits." \
     "Requires: yt-dlp, docker"
     exit 0
+fi
+
+# check if a video url was passed as an argument and exit if it wasn't
+if [ -z "$vid" ]; then
+    echo "Error: No video url passed as an argument"
+    exit 1
 fi
 
 # check if docker is running and exit if it isn't
