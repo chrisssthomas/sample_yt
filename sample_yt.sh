@@ -4,7 +4,6 @@ if [ "$vid" = "-h" ] || [ "$vid" = "--help" ]; then
     printf '%s\n' \
     "Usage: sample_yt.sh <dir to write to> <youtube video url>" \
     "Downloads a youtube video and separates the audio into stems using spleeter." \
-    "The stems are written to a subdirectory called splits." \
     "Requires: yt-dlp, docker"
     exit 0
 fi
