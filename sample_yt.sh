@@ -13,7 +13,8 @@ if [ "$vid" = "-h" ] || [ "$vid" = "--help" ]; then
     printf '%s\n' \
     "Usage: sample_yt.sh <youtube video url>" \
     "Downloads a youtube video and separates the audio into stems using spleeter." \
-    "The stems are written to a subdirectory called splits."
+    "The stems are written to a subdirectory called splits." \
+    "Requires: yt-dlp, docker"
     exit 0
 fi
 
@@ -23,18 +24,14 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
-# get the video title and description
 title=$(yt-dlp --get-title $vid)
 desc=$(yt-dlp --get-description $vid)
 
-# remove spaces and non alphanumeric chars from the title and replace them with underscores
 title=$(echo "$title" | tr -cd '[:alnum:] ' | tr ' ' '_')
 
-# create a subdirectory with the video title
 mkdir "$title"
 cd "$title"
 
-# write the video title and description to a text file
 echo "$title" > "$title.txt"
 echo "$desc" >> "$title.txt"
 
