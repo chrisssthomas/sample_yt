@@ -35,16 +35,12 @@ cd "$title"
 echo "$title" > "$title.txt"
 echo "$desc" >> "$title.txt"
 
-# download the video as a wav file
 yt-dlp --extract-audio --audio-format wav $vid
 
-# rename the wav file to the video title
 mv *.wav "$title".wav
 
-# use docker and spleeter to separate the audio into stems and write the stems to the subdirectory
 docker run -v /Users/chris/Music/samples/"$title":/splits \
 deezer/spleeter:3.8-5stems separate -o /splits \
 -p spleeter:5stems /splits/"$title".wav
 
-# open the subdirectory in finder
 open .
