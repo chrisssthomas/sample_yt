@@ -1,11 +1,8 @@
-cd /Users/chris/Music/samples
-vid=$1
-
 # respond to the -h or --help flags
 if [ "$vid" = "-h" ] || [ "$vid" = "--help" ]; then
 
     printf '%s\n' \
-    "Usage: sample_yt.sh <youtube video url>" \
+    "Usage: sample_yt.sh <dir to write to> <youtube video url>" \
     "Downloads a youtube video and separates the audio into stems using spleeter." \
     "The stems are written to a subdirectory called splits." \
     "Requires: yt-dlp, docker"
@@ -24,6 +21,10 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
+working_dir=$1
+vid=$2
+cd $working_dir
+
 title=$(yt-dlp --get-title $vid)
 desc=$(yt-dlp --get-description $vid)
 
@@ -39,7 +40,7 @@ yt-dlp --extract-audio --audio-format wav $vid
 
 mv *.wav "$title".wav
 
-docker run -v /Users/chris/Music/samples/"$title":/splits \
+docker run -v $working_dir/"$title":/splits \
 deezer/spleeter:3.8-5stems separate -o /splits \
 -p spleeter:5stems /splits/"$title".wav
 
