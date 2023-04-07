@@ -1,5 +1,5 @@
 # sample_yt
-Samples a given youtube video, converts it to WAV and also uses Spleeter to split the sample into 5 stems
+samples a given youtube video, converts it to WAV and also uses spleeter to split the sample into 5 stems
 
 ## usage
 
