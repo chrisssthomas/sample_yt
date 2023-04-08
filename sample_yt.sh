@@ -1,9 +1,14 @@
-# respond to the -h or --help flags
-if [ "$vid" = "-h" ] || [ "$vid" = "--help" ]; then
+working_dir=$1
+vid=$2
+cd $working_dir
+
+# respond to the -h or --help flags if they are anywhere in the command
+if [[ "$@" == *"-h"* ]] || [[ "$@" == *"--help"* ]]; then
 
     printf '%s\n' \
     "Usage: sample_yt.sh <dir to write to> <youtube video url>" \
     "Downloads a youtube video and separates the audio into stems using spleeter." \
+    "The stems are written to a subdirectory called splits." \
     "Requires: yt-dlp, docker"
     exit 0
 fi
@@ -20,10 +25,6 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
-working_dir=$1
-vid=$2
-cd $working_dir
-
 title=$(yt-dlp --get-title $vid)
 desc=$(yt-dlp --get-description $vid)
 
@@ -38,6 +39,12 @@ echo "$desc" >> "$title.txt"
 yt-dlp --extract-audio --audio-format wav $vid
 
 mv *.wav "$title".wav
+
+# if we receive an --only-sample flag anywhere in the command we don't run spleeter
+if [[ "$@" == *"--only-sample"* ]]; then
+    echo "Only sampling, not running spleeter"
+    exit 0
+fi
 
 docker run -v $working_dir/"$title":/splits \
 deezer/spleeter:3.8-5stems separate -o /splits \
