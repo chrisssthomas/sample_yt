@@ -40,7 +40,6 @@ yt-dlp --extract-audio --audio-format wav $vid
 
 mv *.wav "$title".wav
 
-# if we receive an --only-sample flag anywhere in the command we don't run spleeter
 if [[ "$@" == *"--only-sample"* ]]; then
     echo "Only sampling, not running spleeter"
     exit 0
