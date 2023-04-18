@@ -3,7 +3,7 @@ samples a given youtube video, converts it to WAV and also uses spleeter to spli
 
 ## usage
 
-`./sample_yt <working directory> <youtube video url>`
+`./sample_yt <output directory> <youtube video url>`
 
 ## requirements
 - docker
