@@ -2,7 +2,6 @@ working_dir=$1
 vid=$2
 cd $working_dir
 
-# respond to the -h or --help flags if they are anywhere in the command
 if [[ "$@" == *"-h"* ]] || [[ "$@" == *"--help"* ]]; then
 
     printf '%s\n' \
@@ -13,13 +12,11 @@ if [[ "$@" == *"-h"* ]] || [[ "$@" == *"--help"* ]]; then
     exit 0
 fi
 
-# check if a video url was passed as an argument and exit if it wasn't
 if [ -z "$vid" ]; then
     echo "Error: No video url passed as an argument"
     exit 1
 fi
 
-# check if docker is running and exit if it isn't
 if ! docker info > /dev/null 2>&1; then
     echo "Docker is not running"
     exit 1
