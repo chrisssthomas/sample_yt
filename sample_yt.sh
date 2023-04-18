@@ -3,7 +3,6 @@ vid=$2
 cd $working_dir
 
 if [[ "$@" == *"-h"* ]] || [[ "$@" == *"--help"* ]]; then
-
     printf '%s\n' \
     "Usage: sample_yt.sh <dir to write to> <youtube video url>" \
     "Downloads a youtube video and separates the audio into stems using spleeter." \
